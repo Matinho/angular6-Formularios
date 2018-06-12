@@ -1,0 +1,88 @@
+<h4>Formularios <small>Data</small></h4>
+<hr>
+<form [formGroup]="forma" (ngSubmit)="guardarCambios()" novalidate>
+    <div formGroupName="nombreCompleto">
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Nombre</label>
+            <div class="col-8">
+                <input class="form-control" [ngClass]="{'is-invalid': !forma.controls['nombreCompleto'].controls['nombre'].valid}" type="text" placeholder="Nombre" formControlName="nombre">
+                <div *ngIf="forma.get('nombreCompleto.nombre').errors?.required" [ngClass]="{ 'is-invalid':forma.get('nombreCompleto.nombre').invalid }">
+                    El nombre es necesario
+                </div>
+                <div *ngIf="forma.get('nombreCompleto.nombre').errors?.minlength" [ngClass]="{ 'is-invalid':forma.get('nombreCompleto.nombre').invalid }">
+                    Minimo 3 letras
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-2 col-form-label">Apellido</label>
+            <div class="col-8">
+                <!-- [ngClass]="{'is-invalid': !forma.get('apellido').valid}" -->
+                <input class="form-control" type="text" placeholder="Apellido" formControlName="apellido">
+                <!-- <div *ngIf="forma.controls['apellido'].errors?.required" [ngClass]="{ 'is-invalid':forma.get('apellido').invalid }">
+                    El apellido es necesario
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Correo</label>
+        <div class="col-md-8">
+            <!-- [ngClass]="{'is-invalid': !forma.get('correo').valid}" -->
+            <input class="form-control" type="email" placeholder="Correo electrónico" formControlName="correo">
+            <!-- <div *ngIf="forma.controls['correo'].errors?.required" [ngClass]="{ 'is-invalid':forma.get('correo').invalid }">
+                El Correo es necesario
+            </div>
+            <div *ngIf="forma.controls['correo'].errors?.pattern" [ngClass]="{ 'is-invalid':forma.get('correo').invalid }">
+                Correo invalido
+            </div> -->
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Nombre de Usuario</label>
+        <div class="col-md-8">
+            <input class="form-control" type="text" placeholder="Usuario" formControlName="username">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Password</label>
+        <div class="col-md-8">
+            <input class="form-control" type="password" placeholder="Password" formControlName="password1">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Repetir Password</label>
+        <div class="col-md-8">
+            <input class="form-control" type="password" placeholder="Repetir Password" formControlName="password2">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">Pasatiempos</label>
+        <div class="col-md-8" formArrayName="pasatiempos">
+            <input *ngFor="let pasatiempo of forma.controls['pasatiempos'].controls; let i = index" [formControlName]="i" type="text" class="form-control">
+        </div>
+        <button (click)="agregarPasatiempo()" type="button" class="btn btn-primary">
+            Nuevo
+        </button>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-2 col-form-label">&nbsp;</label>
+        <div class="input-group col-md-8">
+            <button type="submit" class="btn btn-outline-primary">
+                Guardar
+            </button>
+        </div>
+    </div>
+
+    {{ forma.valid }}
+
+    <br> {{ forma.status }}
+
+</form>
